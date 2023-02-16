@@ -25,7 +25,8 @@ public class PurchaseList extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         binding = FragmentPurchaseListBinding.inflate(getLayoutInflater());
 
         getChildFragmentManager().beginTransaction()

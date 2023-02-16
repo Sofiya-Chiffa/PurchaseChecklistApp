@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.MediaStore;
 
 import com.ephirium.purchasechecklistapplication.databinding.ActivityCaptureImageBinding;
 
@@ -25,5 +26,7 @@ public class CaptureImage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityCaptureImageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        Intent intent = new Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA);
+        startActivity(intent);
     }
 }
