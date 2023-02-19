@@ -4,6 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CaptureImage">
+    tools:context=".CaptureImage"
+    android:layout_gravity="center">
+
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:rotation="90"
+        android:contentDescription="Image from camera"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,16 +1,23 @@
 package com.ephirium.purchasechecklistapplication;
 
+import android.Manifest;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentContainerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.ephirium.purchasechecklistapplication.databinding.FragmentPurchaseListBinding;
+
+import java.util.ArrayList;
+import java.util.List;
 
 // Фрагмент со списком покупок
 public class PurchaseList extends Fragment {
@@ -28,10 +35,6 @@ public class PurchaseList extends Fragment {
     public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         binding = FragmentPurchaseListBinding.inflate(getLayoutInflater());
-
-        getChildFragmentManager().beginTransaction()
-                .replace(R.id.purch, Purchase.newInstance(), null)
-                .commit();
 
         return binding.getRoot();
     }
