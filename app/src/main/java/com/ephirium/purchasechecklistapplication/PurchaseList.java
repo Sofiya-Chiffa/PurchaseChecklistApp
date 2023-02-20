@@ -57,6 +57,7 @@ public class PurchaseList extends Fragment {
         String name;
         int count;
         int cost;
+        boolean st;
         userCursor.moveToFirst();
         while (userCursor.moveToNext()) {
 
@@ -66,9 +67,11 @@ public class PurchaseList extends Fragment {
                     .getColumnIndex(DatabaseHelper.COLUMN_COUNT)));
             cost = Integer.parseInt(userCursor.getString(userCursor
                     .getColumnIndex(DatabaseHelper.COLUMN_COST)));
-
+            st = Boolean.parseBoolean(userCursor.getString(userCursor
+                    .getColumnIndex(DatabaseHelper.COLUMN_STATUS)));
+            if (!st){
             purchaseList.add(new SinglePurchase(name, count, cost,
-                    new CategoryPurchase("...")));
+                    new CategoryPurchase("...")));}
         }
         //purchaseList.add(new SinglePurchase("Творожок", 1, 100,
         //        new CategoryPurchase("Молочные Продукты")));

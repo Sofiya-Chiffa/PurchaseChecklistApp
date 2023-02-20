@@ -1,9 +1,16 @@
 package com.ephirium.purchasechecklistapplication;
 
+import static com.ephirium.purchasechecklistapplication.DatabaseHelper.COLUMN_NAME;
+import static com.ephirium.purchasechecklistapplication.DatabaseHelper.COLUMN_STATUS;
+import static com.ephirium.purchasechecklistapplication.DatabaseHelper.TABLE_PRODUCTS;
+
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.graphics.Point;
@@ -59,6 +66,8 @@ public class CaptureImage extends AppCompatActivity {
 
     // TODO: добавить возможность снятия фотки и распознавание текста
 
+    DatabaseHelper sqlHelper;
+    Cursor userCursor;
     private ActivityCaptureImageBinding binding;
     private Uri fileImageUri;
 
@@ -158,8 +167,45 @@ public class CaptureImage extends AppCompatActivity {
 
 
     // ToDO: дописать подключение к датабазе и поиск по именам
+    @SuppressLint("Range")
     private void connectToDataBase(String name){
+        String needWord = "";
+        sqlHelper = DatabaseHelper.getInstance(this);
+        sqlHelper.open();
+        userCursor = sqlHelper.qw();
+        String n;
+        String[] hahaha = new String[1000];
+        int j = 0;
+        while (userCursor.moveToNext()) {
+            n = userCursor.getString(userCursor
+                    .getColumnIndex(DatabaseHelper.COLUMN_NAME));
+            hahaha[j] = n;
+        }
+        String[] words = name.split(" ");
+        int a = 0;
+        for (String word : words) {
+            for (String ha : hahaha) {
+                if (ha.equals(word)){
+                    a = 1;
+                    break;
+                }
+            if (a == 1){
+                needWord = word;
+                break;
+            }
+            }
+        }
+        if (!needWord.equals("")) {
+            changeProductStatus(needWord);
+        }
+        onDestroy();
+    }
 
+    public void changeProductStatus(String name) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_STATUS, true);
+        sqlHelper.update(TABLE_PRODUCTS, contentValues, COLUMN_NAME + "=?", new String [] { name });
+        finish();
     }
 
     private void startCameraForResult() {
