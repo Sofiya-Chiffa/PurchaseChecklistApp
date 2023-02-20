@@ -5,5 +5,77 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AddPurchase">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
+    <TextView
+        android:id="@+id/addprtext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Добавление продукта"
+        tools:ignore="MissingConstraints" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:orientation="horizontal"
+        tools:ignore="MissingConstraints">
+
+        <TextView
+            android:id="@+id/nameprtext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Название"
+            tools:ignore="MissingConstraints" />
+
+        <EditText
+            android:id="@+id/nameedittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:orientation="horizontal"
+            tools:ignore="MissingConstraints">
+
+            <TextView
+                android:id="@+id/countprtext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="количество"
+                tools:ignore="MissingConstraints" />
+
+            <EditText
+                android:id="@+id/countedittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/add_pr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ввести"
+            tools:ignore="MissingConstraints" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/exitbut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="Выход"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="161dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
