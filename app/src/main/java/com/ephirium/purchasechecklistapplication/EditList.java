@@ -6,6 +6,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.widget.Button;
+import android.widget.EditText;
+import android.view.View;
+
 import com.ephirium.purchasechecklistapplication.databinding.ActivityEditListBinding;
 
 // Activity (лучше переделать в фрагмент), отвечающая за изменение списка покупок
@@ -25,5 +29,6 @@ public class EditList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityEditListBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
     }
 }

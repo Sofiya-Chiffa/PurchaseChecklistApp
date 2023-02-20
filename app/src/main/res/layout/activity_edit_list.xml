@@ -6,4 +6,88 @@
     android:layout_height="match_parent"
     tools:context=".EditList">
 
+
+    <TextView
+        android:id="@+id/t1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="200dp"
+        android:text="@string/product"
+        android:textSize="30sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:titleTextColor="@color/second"
+        tools:layout_editor_absoluteX="30dp"/>
+
+    <TextView
+        android:id="@+id/t2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="300dp"
+        android:text="@string/cnt"
+        android:textSize="30sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:titleTextColor="@color/second"
+        tools:layout_editor_absoluteX="30dp"/>
+
+
+    <EditText
+        android:id="@+id/add_el"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="250dp"
+        android:autofillHints=""
+        android:background="@color/second"
+        android:inputType="text"
+        android:text="@string/edit"
+        android:textSize="30sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:titleTextColor="@color/black"
+        tools:layout_editor_absoluteX="30dp"
+        tools:ignore="LabelFor"/>
+
+    <EditText
+        android:id="@+id/add_cnt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="350dp"
+        android:autofillHints=""
+        android:background="@color/second"
+        android:inputType="text"
+        android:text="@string/edit"
+        android:textSize="30sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:titleTextColor="@color/black"
+        tools:layout_editor_absoluteX="30dp"
+        tools:ignore="LabelFor"/>
+
+    <Button
+        android:id="@+id/acceptbtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="450dp"
+        android:background="@color/second"
+        android:text="@string/change_value"
+        app:layout_constraintTop_toTopOf="parent"/>
+    <Button
+        android:id="@+id/deletebtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="550dp"
+        android:background="@color/red"
+        android:text="@string/del_value"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

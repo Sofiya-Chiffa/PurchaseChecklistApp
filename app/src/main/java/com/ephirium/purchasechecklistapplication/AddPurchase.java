@@ -26,4 +26,15 @@ public class AddPurchase extends AppCompatActivity {
         binding = ActivityAddPurchaseBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
     }
+
+
+    public void addProduct(String name) {
+        finish();
+    }
+
+    public void deleteProduct(String name) {
+        finish();
+    }
+
+
 }
