@@ -47,6 +47,7 @@ class DatabaseHelper extends SQLiteOpenHelper {
             COLUMN_COST + " INT," +
             COLUMN_STATUS + " BOOLEAN);";
 
+
     public static DatabaseHelper getInstance(Context context) {
         if (databaseHelper == null) databaseHelper = new DatabaseHelper(context);
         return databaseHelper;
@@ -99,6 +100,10 @@ class DatabaseHelper extends SQLiteOpenHelper {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public Cursor qw(){
+        return database.rawQuery("select * from " + DatabaseHelper.TABLE_PRODUCTS, null);
     }
 
     private File copyAssetsDatabase(String assetsDatabaseName) throws IOException {
