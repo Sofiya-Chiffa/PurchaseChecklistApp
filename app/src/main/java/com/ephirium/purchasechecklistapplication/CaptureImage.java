@@ -12,25 +12,24 @@ import android.hardware.Camera;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CameraManager;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.FileUtils;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.util.SparseIntArray;
 import android.view.Surface;
-import android.view.View;
+import android.widget.AbsListView;
 
 import androidx.annotation.NonNull;
-import androidx.camera.camera2.interop.Camera2CameraInfo;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.camera.camera2.interop.Camera2Interop;
-import androidx.camera.camera2.interop.CaptureRequestOptions;
-import androidx.camera.camera2.interop.ExperimentalCamera2Interop;
-import androidx.camera.core.internal.CameraUseCaseAdapter;
+import androidx.camera.core.CameraInfo;
 import androidx.core.content.FileProvider;
+import androidx.core.graphics.PathUtils;
 
 import com.ephirium.purchasechecklistapplication.databinding.ActivityCaptureImageBinding;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -38,15 +37,20 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.mlkit.nl.languageid.LanguageIdentification;
 import com.google.mlkit.nl.languageid.LanguageIdentifier;
+import com.google.mlkit.nl.translate.TranslateLanguage;
 import com.google.mlkit.vision.common.InputImage;
 import com.google.mlkit.vision.text.Text;
 import com.google.mlkit.vision.text.TextRecognition;
 import com.google.mlkit.vision.text.TextRecognizer;
-import com.google.mlkit.vision.text.TextRecognizerOptionsInterface;
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions;
+import com.googlecode.tesseract.android.TessBaseAPI;
+
+import org.intellij.lang.annotations.Language;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.Objects;
 import java.util.UUID;
 
 // Activity, отвечающая за захват изображения и перевод текста
@@ -116,34 +120,34 @@ public class CaptureImage extends AppCompatActivity {
     }
 
     private void analyzeImage(){
-        Bitmap bitmap = null;
+        Bitmap bitmap;
         try {
             bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),
                     fileImageUri);
-            InputImage image;
             try{
-                Bitmap bmi = MediaStore.Images.Media.getBitmap(getContentResolver(),
-                        fileImageUri);
-                image = InputImage.fromBitmap(bmi,
-                        getRotationCompensation(String.valueOf(Camera.CameraInfo.CAMERA_FACING_BACK),
+                Matrix matrix = new Matrix();
+                matrix.postRotate(getRotationCompensation(
+                        String.valueOf(Camera.CameraInfo.CAMERA_FACING_BACK),
                         this, false));
-                Task<Text> result = textRecognizer.process(image)
-                        .addOnSuccessListener(new OnSuccessListener<Text>() {
-                            @Override
-                            public void onSuccess(Text text) {
-                                languageIdentifier.identifyLanguage(text.getText());
+                bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(),
+                        matrix, true);
 
-                                String[] res = getSuccessString(text);
-                                connectToDataBase(res);
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
+                File directory = getCacheDir().getParentFile();
+                String filePath =
+                        directory.getAbsolutePath() + "/files/";
+                Log.d("PurchaseApplication", filePath);
 
-                            }
-                        });
-            } catch (IOException e){
-                Log.d("PurchaseCheckList", e.toString());
+                TessBaseAPI api = new TessBaseAPI();
+                // api.init(filePath, "rus");
+
+                api.init(filePath, "rus");
+                api.setImage(bitmap);
+                String s = api.getUTF8Text();
+                Log.d("PurchaseApplication", s);
+                api.end();
+                connectToDataBase(s);
+
+
             } catch (CameraAccessException e) {
                 throw new RuntimeException(e);
             }
@@ -152,27 +156,10 @@ public class CaptureImage extends AppCompatActivity {
         }
     }
 
-    private String[] getSuccessString(Text result){
-        String resultText = result.getText();
-        String[] results = new String[result.getTextBlocks().size()];
-        int i = 0;
-        for (Text.TextBlock block : result.getTextBlocks()) {
-            String blockText = block.getText();
-            Point[] blockCornerPoints = block.getCornerPoints();
-            Rect blockFrame = block.getBoundingBox();
-            results[i] = blockText;
-            i++;
-        }
-        return results;
-    }
-
 
     // ToDO: дописать подключение к датабазе и поиск по именам
-    private Purchase[] connectToDataBase(String[] names){
-        for(String name : names){
-            Log.d("PurchaseApplication", name);
-        }
-        return null;
+    private void connectToDataBase(String name){
+
     }
 
     private void startCameraForResult() {
